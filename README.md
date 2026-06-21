@@ -4,6 +4,8 @@ progreso de juegos, pensada para todos aquellos
 jugadores que quieran organizar su lista de videojuegos
 en curso o proximos a jugar.
 
+![g-track logo](assets/g_track_logo.png)
+
 ## Seguimiento de juegos
 El seguimiento de juegos es manual, es decir,
 el usuario registra los juegos que desea jugar y
