@@ -3,12 +3,13 @@
     "name": "g-track",
     "slug": "g-track",
     "version": "1.0.0",
+    "scheme": "gtrack",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/g_track_logo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/g_track_logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,6 +26,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite"
+    ]
   }
 }
