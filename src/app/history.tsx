@@ -1,24 +1,30 @@
+import ColumnView from "../components/layouts/column";
 import CardView from "../components/ui/cards";
+import GameCard from "../components/ui/games";
 import ScreenView from "../components/ui/screen";
 import MyScrollView from "../components/ui/scrollables";
 import ThemedText from "../components/ui/texts";
-import { WARN, CLEAR } from "../utils/themeColors";
+import { useGameContext } from "../hooks/context";
+import { WARN, CLEAR, PRIMARY } from "../utils/themeColors";
 
 //pantalla principal
 export default function History(){
+    //contexto de juegos
+    const gamesctx = useGameContext();
+
+    //pantalla de historial
     return(
         <ScreenView alignment="top">
             <ThemedText text="Juegos completados" type="title 2"/>
             <MyScrollView>
-                <CardView bgcolor={WARN}>
-                    <ThemedText text="sonic unleashed" type="normal"/>
-                </CardView>
-                <CardView bgcolor={WARN}>
-                    <ThemedText text="pokemon rojo fuego" type="normal"/>
-                </CardView>
-                <CardView bgcolor={WARN}>
-                    <ThemedText text="wario land 1" type="normal"/>
-                </CardView>
+                {gamesctx.games.length != 0 ? 
+                    <ColumnView>
+                        {gamesctx.games.filter(game => game.status == 2).map(game => 
+                            <GameCard game={game} handle_update={gamesctx.update_game}/>
+                        )}
+                    </ColumnView> :
+                    <ThemedText text="no hay juegos por mostrar" type="normal"/>
+                }
             </MyScrollView>
         </ScreenView>
     );

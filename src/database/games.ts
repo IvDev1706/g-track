@@ -2,12 +2,16 @@ import { db } from "./dbconfig";
 import { Game } from "../interfaces/models";
 
 //obtener juegos
-export async function get_games():Promise<Array<Game>>{
+export async function get_games(status?:number):Promise<Array<Game>>{
+    //crear la query
+    let query = "SELECT * FROM Game";
+    query = status ? query+" WHERE status = "+status+";" : query;
+
     //validar conexion
     if(!db) return [];
 
     //extraer juegos
-    return await db.getAllAsync<Game>("SELECT * FROM Games;");
+    return await db.getAllAsync<Game>(query);
 }
 
 //registrar juego
@@ -30,7 +34,7 @@ export async function register_game(game:Game):Promise<number>{
 }
 
 //actualizar juego
-export async function update_list_item(game:Game):Promise<boolean>{
+export async function update_game(game:Game):Promise<boolean>{
     //validar conexion
     if(!db) return false;
 
@@ -52,7 +56,7 @@ export async function update_list_item(game:Game):Promise<boolean>{
 }
 
 //eliminar item
-export async function delete_list_item(id:number):Promise<boolean>{
+export async function delete_game(id:number):Promise<boolean>{
     //validar conexion
     if(!db) return false;
 

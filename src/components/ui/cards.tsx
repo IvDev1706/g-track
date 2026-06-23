@@ -24,6 +24,7 @@ export default function CardView({ children, bgcolor }:CardViewProps){
 //estilos
 const makeStyles = (bgcolor?:string):StyleProp<ViewStyle> => ({
     backgroundColor: bgcolor ? bgcolor : CLEAR,
+    gap: 10,
     borderWidth: 2,
     borderRadius: 5,
     borderColor: DARK,

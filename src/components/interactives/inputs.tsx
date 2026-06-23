@@ -1,5 +1,5 @@
 import { TextInput, StyleSheet } from "react-native";
-import { SECONDARY } from "../../utils/themeColors";
+import { PRIMARY } from "../../utils/themeColors";
 
 interface ThemedTextInputProps {
     prefix?: string,
@@ -16,7 +16,7 @@ export default function ThemedTextInput({ prefix, onChange }:ThemedTextInputProp
 
 const styles = StyleSheet.create({
     input: {
-        borderBottomColor: SECONDARY,
+        borderBottomColor: PRIMARY,
         borderBottomWidth: 2,
         padding: 2
     }

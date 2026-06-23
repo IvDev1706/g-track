@@ -1,6 +1,6 @@
 import { Pressable, StyleProp, ViewStyle } from "react-native";
 import ThemedText from "../ui/texts";
-import { PRIMARY, PRIMARY2 } from "../../utils/themeColors";
+import { CLEAR, PRIMARY, PRIMARY2 } from "../../utils/themeColors";
 import React, { ReactElement } from "react";
 
 //propiedades de boton
@@ -21,7 +21,7 @@ export default function DefaultButton({ icon, text, onClick }:DefaultButtonProps
             }
         ]} onPress={ e => onClick()}>
             {icon}
-            {text != "" && !icon && <ThemedText text={text} type="button" />}
+            {text != "" && !icon && <ThemedText text={text} type="button" color={CLEAR} />}
         </Pressable>
     );
 }
