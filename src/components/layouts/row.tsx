@@ -11,7 +11,7 @@ const styles:StyleProp<ViewStyle> = {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 10
+    gap: 5
 };
 
 //layout de renglon

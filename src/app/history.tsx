@@ -20,7 +20,7 @@ export default function History(){
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 2).map(game => 
-                            <GameCard game={game} handle_update={gamesctx.update_game}/>
+                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>

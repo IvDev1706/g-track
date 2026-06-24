@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import ThemedText from "../ui/texts";
-import { PRIMARY2, PRIMARY, CLEAR } from "../../utils/themeColors";
+import { SECONDARY2, SECONDARY, CLEAR } from "../../utils/themeColors";
 import React, { ReactElement } from "react";
 
 //propiedades de boton
@@ -16,8 +16,8 @@ export default function FloatButton({ icon, text, onClick }:FloatButtonProps){
         <Pressable style={({ pressed }) => [
             styles.button,
             {
-                backgroundColor: pressed ? PRIMARY2 : PRIMARY,
-                borderColor: pressed ? PRIMARY2 : PRIMARY
+                backgroundColor: pressed ? SECONDARY2 : SECONDARY,
+                borderColor: pressed ? SECONDARY2 : SECONDARY
             }
         ]} onPress={ e => onClick()}>
             <View style={styles.content}>

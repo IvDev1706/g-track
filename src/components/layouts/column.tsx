@@ -12,7 +12,7 @@ interface ColumnViewProps {
 const styles:StyleProp<ViewStyle> = ({
     flexDirection: "column",
     justifyContent: "flex-start",
-    gap: 10
+    gap: 5
 });
 
 //layout de renglon

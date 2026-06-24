@@ -2,7 +2,6 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { CLEAR } from "../../utils/themeColors";
 import { StatusBar } from "expo-status-bar";
 import { StyleProp, ViewStyle } from "react-native";
-import { useEffect } from "react";
 
 //parametros de vista
 interface ScreenViewProps {

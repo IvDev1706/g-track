@@ -1,5 +1,6 @@
 import { db } from "./dbconfig";
 import { Game } from "../interfaces/models";
+import { get_formated_date } from "../utils/constats";
 
 //obtener juegos
 export async function get_games(status?:number):Promise<Array<Game>>{
@@ -38,6 +39,11 @@ export async function update_game(game:Game):Promise<boolean>{
     //validar conexion
     if(!db) return false;
 
+    //validar estado
+    if(game.status == 2){
+        game.end_date = get_formated_date();
+    }
+
     //ejecutar la query
     await db.runAsync(`
             UPDATE Game
@@ -47,7 +53,7 @@ export async function update_game(game:Game):Promise<boolean>{
         game.name,
         game.start_date,
         game.status,
-        game.end_date as string,
+        game.end_date ? game.end_date : "",
         game.id as number,
     );
 

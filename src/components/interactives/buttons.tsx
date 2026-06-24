@@ -1,6 +1,6 @@
 import { Pressable, StyleProp, ViewStyle } from "react-native";
 import ThemedText from "../ui/texts";
-import { CLEAR, PRIMARY, PRIMARY2 } from "../../utils/themeColors";
+import { CLEAR, SECONDARY, SECONDARY2 } from "../../utils/themeColors";
 import React, { ReactElement } from "react";
 
 //propiedades de boton
@@ -16,8 +16,8 @@ export default function DefaultButton({ icon, text, onClick }:DefaultButtonProps
         <Pressable style={({ pressed }) => [
             styles,
             {
-                backgroundColor: pressed ? PRIMARY2 : PRIMARY,
-                borderColor: pressed ? PRIMARY2 : PRIMARY
+                backgroundColor: pressed ? SECONDARY2 : SECONDARY,
+                borderColor: pressed ? SECONDARY2 : SECONDARY
             }
         ]} onPress={ e => onClick()}>
             {icon}
