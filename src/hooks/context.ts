@@ -6,7 +6,8 @@ interface GamesContextType {
     games: Game[],
     get_games_db: (status?:number) => void
     add_new_game: (game:Game) => Promise<boolean> 
-    update_game: (game:Game) => Promise<boolean> 
+    update_game_status: (id:number,status:number) => Promise<boolean>
+    update_game_data: (game:Game) => Promise<boolean> 
     delete_game: (id:number) => Promise<boolean> 
 }
 

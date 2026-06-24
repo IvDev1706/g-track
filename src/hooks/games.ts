@@ -1,6 +1,7 @@
 import { useState } from "react";
 import * as game_repository from "../database/games";
 import { Game } from "../interfaces/models";
+import { get_formated_date } from "../utils/constats";
 
 //hook de juegos
 export default function useGames(){
@@ -33,9 +34,25 @@ export default function useGames(){
         return true;
     };
 
-    const update_game = async (game:Game) => {
+    const update_game_status = async (id:number, status:number) => {
         //mandar a la db
-        const res = await game_repository.update_game(game);
+        const res = await game_repository.update_game_status(id,status);
+
+        //validar resultado
+        if(!res){
+            return res;
+        }
+
+        //añadir al estado
+        setGames(games.map(ogame => ogame.id != id ? ogame : {...ogame, status, end_date: get_formated_date()}));
+
+        //exito al crear
+        return res;
+    };
+
+    const update_game_data = async (game:Game) => {
+        //mandar a la db
+        const res = await game_repository.update_game_data(game);
 
         //validar resultado
         if(!res){
@@ -66,5 +83,5 @@ export default function useGames(){
     };
 
     //elementos del hook
-    return { games, get_games_db, add_new_game, update_game, delete_game }
+    return { games, get_games_db, add_new_game, update_game_status, update_game_data, delete_game }
 }

@@ -12,7 +12,7 @@ import ColumnView from "../layouts/column";
 //propiedades del componente
 interface GameCardProps {
     game: Game
-    handle_update: (game:Game) => void
+    handle_update: (id:number, status:number) => void
 }
 
 //componente de juego
@@ -41,7 +41,12 @@ export default function GameCard({ game, handle_update }:GameCardProps){
                     <ThemedText text={"estado: "+GAMESTATUS[localGame.status]} type="normal" color={game.status == 1 ? CLEAR : DARK}/>
                     {game.status == 2 ?
                         <ThemedText text={"fecha: "+game.end_date} type="normal"/>:
-                        <DefaultButton text={game.status == 0 ? "rastrear" : "completar"} onClick={() => handle_update({...localGame, status: localGame.status == 0 ? 1 : 2})}/>
+                        game.status == 1 ?
+                            <RowView distribution={[0.5,0.5]}>
+                                <DefaultButton text="completar" onClick={() => handle_update(localGame.id as number, localGame.status + 1)}/>
+                                <DefaultButton text="descartar" onClick={() => handle_update(localGame.id as number, localGame.status - 1)}/>
+                            </RowView>:
+                        <DefaultButton text="comenzar" onClick={() => handle_update(localGame.id as number, localGame.status + 1)}/>
                     }
                 </ColumnView>
             </RowView>

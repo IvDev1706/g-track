@@ -1,7 +1,7 @@
 import { Modal, View, StyleSheet } from "react-native";
-import { DARK, CLEAR } from "../../utils/themeColors";
-import DefaultButton from "../interactives/buttons";
-import RowView from "../layouts/row";
+import { DARK, CLEAR } from "../../../utils/themeColors";
+import DefaultButton from "../../interactives/buttons";
+import RowView from "../../layouts/row";
 import { ReactNode } from "react";
 
 //propiedades de modal
@@ -14,7 +14,7 @@ interface ModalProps {
 }
 
 //modal para capturar texto
-export default function ModalLayer({ isOpen, setOpen, children, action, onAction }:ModalProps){    
+export default function ActionModal({ isOpen, setOpen, children, action, onAction }:ModalProps){    
     //obtener estilos
     const styles = makeStyles();
     

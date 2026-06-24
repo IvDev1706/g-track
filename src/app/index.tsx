@@ -4,8 +4,8 @@ import MyScrollView from "../components/ui/scrollables";
 import { CLEAR } from "../utils/themeColors";
 import ColumnView from "../components/layouts/column";
 import FloatButton from "../components/interactives/floatbutons";
-import ModalLayer from "../components/ui/modals";
-import { useState } from "react";
+import ActionModal from "../components/ui/modals/action";
+import { useEffect, useState } from "react";
 import { useGameContext } from "../hooks/context";
 import ThemedTextInput from "../components/interactives/inputs";
 import { AntDesign } from "@expo/vector-icons";
@@ -13,11 +13,14 @@ import { Game } from "../interfaces/models";
 import { Alert } from "react-native";
 import GameCard from "../components/ui/games";
 import { get_formated_date } from "../utils/constats";
+import MessageModal from "../components/ui/modals/message";
 
 //pantalla principal
 export default function Index(){
     //estados
-    const [open,setOpen] = useState(false);
+    const [openAction,setOpenAction] = useState(false);
+    const [openMessage,setOpenMessage] = useState(false);
+    const [success,setSuccess] = useState(false);
     const [game,setGame] = useState<Game>({
         name: "",
         start_date: get_formated_date(),
@@ -36,14 +39,13 @@ export default function Index(){
         //mandar al hook
         gamesctx.add_new_game(game).then(res => {
             //mostrar mensaje
-            if(res){
-                Alert.alert("Juego creado","el juego ha sido registrado de forma exitosa");
-            }else{
-                Alert.alert("Error al crear","ha ocurrido un error al registrar el juego");
-            }
+            setSuccess(res);
 
             //cerrar el modal
-            setOpen(false);
+            setOpenAction(false);
+
+            //abrir modal de mensaje
+            setOpenMessage(true);
 
             //limpiar el estado
             setGame({
@@ -57,7 +59,21 @@ export default function Index(){
     //pantalla de inicio
     return(
         <ScreenView alignment="top">
-            <ModalLayer isOpen={open} setOpen={setOpen} action="registrar" onAction={() => handle_add(game)}>
+            <MessageModal
+                title={
+                    success?
+                    "Juego creado":
+                    "Error al crear"
+                }
+                message={
+                    success ?
+                    "el juego ha sido registrado de forma exitosa":
+                    "ha ocurrido un error al registrar el juego"
+                }
+                isOpen={openMessage}
+                setOpen={setOpenMessage}
+            />
+            <ActionModal isOpen={openAction} setOpen={setOpenAction} action="registrar" onAction={() => handle_add(game)}>
                 <ColumnView>
                     <ThemedText text="Registrar nuevo juego" type="title 2"/>
                     <ThemedText text="Nombre del juego:" type="normal"/>
@@ -65,13 +81,13 @@ export default function Index(){
                     <ThemedText text="fecha de inicio:" type="normal"/>
                     <ThemedTextInput prefix={game.start_date} onChange={(v) => setGame({...game, start_date: v})}/>
                 </ColumnView>
-            </ModalLayer>
+            </ActionModal>
             <ThemedText text="Juegos en seguimiento" type="title 2"/>
             <MyScrollView>
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 1).map(game => 
-                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game}/>
+                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
@@ -82,7 +98,7 @@ export default function Index(){
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 0).map(game => 
-                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game}/>
+                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
@@ -90,7 +106,7 @@ export default function Index(){
             </MyScrollView>
             <FloatButton
                 text="añadir juego"
-                onClick={() => setOpen(!open)}
+                onClick={() => setOpenAction(!openAction)}
                 icon={<AntDesign name="plus" size={16} color={CLEAR}/>}
             />
         </ScreenView>

@@ -35,26 +35,46 @@ export async function register_game(game:Game):Promise<number>{
 }
 
 //actualizar juego
-export async function update_game(game:Game):Promise<boolean>{
+export async function update_game_status(id:number, status:number):Promise<boolean>{
     //validar conexion
     if(!db) return false;
 
     //validar estado
-    if(game.status == 2){
-        game.end_date = get_formated_date();
+    let end_date = "";
+    if(status == 2){
+        end_date = get_formated_date();
     }
 
     //ejecutar la query
     await db.runAsync(`
             UPDATE Game
-            SET name = ?, start_date = ?, status = ?, end_date = ?
+            SET status = ?, end_date = ?
+            WHERE id = ?;
+        `,
+        status,
+        end_date,
+        id
+    );
+
+    //retornar id
+    return true;
+}
+
+//actualizar juego
+export async function update_game_data(game:Game):Promise<boolean>{
+    //validar conexion
+    if(!db) return false;
+
+    //ejecutar la query
+    await db.runAsync(`
+            UPDATE Game
+            SET name = ?, start_date = ?, end_date = ?
             WHERE id = ?;
         `,
         game.name,
         game.start_date,
-        game.status,
         game.end_date ? game.end_date : "",
-        game.id as number,
+        game.id as number
     );
 
     //retornar id
