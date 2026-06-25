@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Game } from "../../interfaces/models";
-import { CLEAR, CLEAR2, DANGER, DARK, DARK2, PRIMARY, SECONDARY, SECONDARY2, WARN } from "../../utils/themeColors";
+import { CLEAR, CLEAR2, DARK, PRIMARY, WARN } from "../../utils/themeColors";
 import RowView from "../layouts/row";
 import CardView from "./cards";
 import ThemedText from "./texts";

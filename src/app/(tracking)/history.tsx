@@ -1,11 +1,9 @@
-import ColumnView from "../components/layouts/column";
-import CardView from "../components/ui/cards";
-import GameCard from "../components/ui/games";
-import ScreenView from "../components/ui/screen";
-import MyScrollView from "../components/ui/scrollables";
-import ThemedText from "../components/ui/texts";
-import { useGameContext } from "../hooks/context";
-import { WARN, CLEAR, PRIMARY } from "../utils/themeColors";
+import ColumnView from "../../components/layouts/column";
+import GameCard from "../../components/ui/games";
+import ScreenView from "../../components/ui/screen";
+import MyScrollView from "../../components/ui/scrollables";
+import ThemedText from "../../components/ui/texts";
+import { useGameContext } from "../../hooks/context";
 
 //pantalla principal
 export default function History(){
@@ -20,7 +18,7 @@ export default function History(){
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 2).map(game => 
-                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game}/>
+                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
