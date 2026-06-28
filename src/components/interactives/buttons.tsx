@@ -21,15 +21,18 @@ export default function DefaultButton({ icon, text, onClick }:DefaultButtonProps
             }
         ]} onPress={ e => onClick()}>
             {icon}
-            {text != "" && !icon && <ThemedText text={text} type="button" color={CLEAR} />}
+            {text != "" && <ThemedText text={text} type="button" color={CLEAR} />}
         </Pressable>
     );
 }
 
 //estilos de boton
 const styles:StyleProp<ViewStyle> = {
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
     padding: 5,
     borderWidth: 3,
-    borderRadius: 5
+    borderRadius: 5,
+    gap: 5
 };

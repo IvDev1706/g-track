@@ -1,9 +1,11 @@
 import ColumnView from "../../components/layouts/column";
-import GameCard from "../../components/ui/games";
+import GameStatusCard from "../../components/ui/cards/status";
 import ScreenView from "../../components/ui/screen";
 import MyScrollView from "../../components/ui/scrollables";
 import ThemedText from "../../components/ui/texts";
 import { useGameContext } from "../../hooks/context";
+import { router } from "expo-router";
+import DefaultButton from "../../components/interactives/buttons";
 
 //pantalla principal
 export default function History(){
@@ -18,12 +20,20 @@ export default function History(){
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 2).map(game => 
-                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
+                            <GameStatusCard 
+                                key={game.id} 
+                                game={game} 
+                                handle_update={gamesctx.update_game_status}
+                            />
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
                 }
             </MyScrollView>
+            <DefaultButton
+                text="ver base de juegos"
+                onClick={() => router.navigate("/games")}
+            />
         </ScreenView>
     );
 }

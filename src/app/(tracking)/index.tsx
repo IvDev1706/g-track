@@ -10,7 +10,7 @@ import { useGameContext } from "../../hooks/context";
 import ThemedTextInput from "../../components/interactives/inputs";
 import { AntDesign } from "@expo/vector-icons";
 import { Game } from "../../interfaces/models";
-import GameCard from "../../components/ui/games";
+import GameStatusCard from "../../components/ui/cards/status";
 import { get_formated_date } from "../../utils/constats";
 import MessageModal from "../../components/ui/modals/message";
 
@@ -86,7 +86,7 @@ export default function Tracking(){
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 1).map(game => 
-                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
+                            <GameStatusCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
@@ -97,7 +97,7 @@ export default function Tracking(){
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 0).map(game => 
-                            <GameCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
+                            <GameStatusCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>

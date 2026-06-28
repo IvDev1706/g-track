@@ -1,5 +1,5 @@
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { CLEAR } from "../../utils/themeColors";
+import { CLEAR2 } from "../../utils/themeColors";
 import { StatusBar } from "expo-status-bar";
 import { StyleProp, ViewStyle } from "react-native";
 
@@ -28,7 +28,7 @@ export default function ScreenView({ children, alignment, bgcolor }:ScreenViewPr
 
 //estilos de vista
 const makeStyles = (alignment?:string, bgcolor?:string):StyleProp<ViewStyle> => ({
-    backgroundColor: bgcolor ? bgcolor : CLEAR,
+    backgroundColor: bgcolor ? bgcolor : CLEAR2,
     paddingHorizontal: 10,
     paddingVertical: 5,
     flex: 1,

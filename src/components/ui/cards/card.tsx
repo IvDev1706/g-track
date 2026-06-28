@@ -1,5 +1,5 @@
 import { StyleProp, View, ViewStyle } from "react-native";
-import { CLEAR, DARK, PRIMARY, PRIMARY2, SECONDARY } from "../../utils/themeColors";
+import { CLEAR, DARK } from "../../../utils/themeColors";
 import { ReactNode } from "react";
 
 //propiedades de carview
