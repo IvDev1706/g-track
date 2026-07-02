@@ -5,3 +5,9 @@ export interface Game {
     end_date?: string
     status: number
 }
+
+export interface GameNotification {
+    id?: number
+    game: number
+    notification_id: string
+}
