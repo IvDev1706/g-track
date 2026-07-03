@@ -1,6 +1,7 @@
 import * as Notifications from "expo-notifications";
 import { PRIMARY } from "../utils/themeColors";
 import { parse_date } from "../utils/constats";
+import { Platform } from "react-native";
 
 //manejador de notificaciones
 //define como se muestran las notificaciones
@@ -13,37 +14,36 @@ Notifications.setNotificationHandler({
     })
 });
 
-
-//pedir permiso explicito
-export async function requestNotificationPermission(){
+//verificar el estado del permiso
+export async function checkNotificationStatus(){
     //obtener permiso
     const { status } = await Notifications.getPermissionsAsync();
 
-    //validar si ya tiene el permiso
-    if(status == 'granted'){
-        //ya lo tiene
-        return true;
-    }
+    //dato entre granted, undetermined, denied
+    return status;
+}
 
-    //permiso explicito apartir de android 13 (API 33)
-    if (status == 'undetermined') {
-        //obtener el estatus del permiso
+
+//pedir permiso explicito
+export async function requestNotificationPermission(){
+    // Android 13+ requiere permiso explícito
+    if(Platform.OS == 'android' && Platform.Version >= 33) {
         const { status } = await Notifications.requestPermissionsAsync();
-        //regresar el estado
-        return status == 'granted';
+        if (status != 'granted') return false;
     }
 
-    return false;
+    //permiso concedido
+    return true;
 }
 
 //crear canal de notificaciones (android)
 export async function setupAndroidChannel() {
     //configurar el canal
     await Notifications.setNotificationChannelAsync('default', {
-      name: 'General',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: PRIMARY,
+        name: 'General',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: PRIMARY,
     });
 }
 
@@ -70,7 +70,7 @@ export async function scheduleNotification(game_name:string, date:string):Promis
     });
 
     //retornar id
-    return id
+    return id;
 }
 
 //eliminar notificacion

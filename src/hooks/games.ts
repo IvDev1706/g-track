@@ -1,7 +1,9 @@
 import { useState } from "react";
 import * as game_repository from "../database/games";
+import * as notification_repository from "../database/notifications";
 import { Game } from "../interfaces/models";
 import { get_formated_date } from "../utils/constats";
+import * as NotificationService from "../services/notification";
 
 //hook de juegos
 export default function useGames(){
@@ -25,6 +27,10 @@ export default function useGames(){
         if(!id){
             return false;
         }
+
+        //fijar notificacion
+        const not_id = await NotificationService.scheduleNotification(game.name,game.start_date);
+        notification_repository.register_notification(id,not_id);
 
         //añadir al estado
         game.id = id;
@@ -59,6 +65,18 @@ export default function useGames(){
             return res;
         }
 
+        //si cambio la fecha de inicio
+        const ogame = games.find(ogame => ogame.id == game.id);
+        if(ogame && ogame.start_date != game.start_date){
+            //obtener notificacion
+            const notif_id = await notification_repository.get_notification_id(game.id as number);
+            //cancelar notificacion
+            await NotificationService.cancelScheduledNotificacion(notif_id);
+            //reagendar notificacion
+            const not_id = await NotificationService.scheduleNotification(game.name,game.start_date);
+            await notification_repository.update_notification(game.id as number,not_id);
+        }
+
         //añadir al estado
         setGames(games.map(ogame => ogame.id != game.id ? ogame : game));
 
@@ -74,6 +92,10 @@ export default function useGames(){
         if(!res){
             return res;
         }
+
+        //obtener notificacion
+        const notif_id = await notification_repository.get_notification_id(id);
+        await NotificationService.cancelScheduledNotificacion(notif_id);
 
         //añadir al estado
         setGames(games.filter(game => game.id != id));

@@ -60,7 +60,7 @@ export default function Tracking(){
         <ScreenView alignment="top">
             <MessageModal
                 title={
-                    success?
+                    success ?
                     "Juego creado":
                     "Error al crear"
                 }
