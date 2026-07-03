@@ -34,7 +34,7 @@ export function parse_date(date:string, diff:number = 0){
     //verificar diferencia
     if(diff){
         //restar dias previos
-        parsed_date.setDate(parsed_date.getTime()-diff);
+        parsed_date.setDate(parsed_date.getDate()-diff);
     }
 
     //retornar fecha
