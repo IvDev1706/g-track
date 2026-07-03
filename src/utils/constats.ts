@@ -33,8 +33,8 @@ export function parse_date(date:string, diff:number = 0){
 
     //verificar diferencia
     if(diff){
-        //restar en milisegundos (mas preciso)
-        parsed_date.setDate(parsed_date.getTime()-(diff * 24 * 60 * 60 * 1000));
+        //restar dias previos
+        parsed_date.setDate(parsed_date.getTime()-diff);
     }
 
     //retornar fecha
