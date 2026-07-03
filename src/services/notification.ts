@@ -51,7 +51,7 @@ export async function setupAndroidChannel() {
 export async function scheduleNotification(game_name:string, date:string):Promise<string>{
     //fecha del evento
     const notification_date = parse_date(date,1);
-    notification_date.setHours(20);
+    notification_date.setHours(20,0,0,0);
 
     //agendar notificacion
     const id = await Notifications.scheduleNotificationAsync({
