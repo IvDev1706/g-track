@@ -19,6 +19,7 @@ export default function Tracking(){
     //estados
     const [openAction,setOpenAction] = useState(false);
     const [openMessage,setOpenMessage] = useState(false);
+    const [openWarning,setOpenWarning] = useState(false);
     const [success,setSuccess] = useState(false);
     const [game,setGame] = useState<Game>({
         name: "",
@@ -34,6 +35,12 @@ export default function Tracking(){
         //limpiar juego
         game.name = game.name.trim();
         game.start_date = game.start_date.trim();
+
+        //validacion de campo vacio
+        if(!game.name || !game.start_date){
+            setOpenWarning(true);
+            return;
+        }
 
         //mandar al hook
         gamesctx.add_new_game(game).then(res => {
@@ -58,6 +65,12 @@ export default function Tracking(){
     //pantalla de inicio
     return(
         <ScreenView alignment="top">
+            <MessageModal
+                title={"Campo vacio"}
+                message={"por favor llena todos los campos"}
+                isOpen={openWarning}
+                setOpen={setOpenWarning}
+            />
             <MessageModal
                 title={
                     success ?

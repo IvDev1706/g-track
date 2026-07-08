@@ -8,7 +8,7 @@ interface ThemedTextInputProps {
 
 export default function ThemedTextInput({ prefix, onChange }:ThemedTextInputProps){
     return (
-        <TextInput style={styles.input} onChange={e => {if(e.nativeEvent.text.length > 3) onChange(e.nativeEvent.text.trim());}}>
+        <TextInput style={styles.input} onChange={e => { onChange(e.nativeEvent.text.trim()) }}>
             {prefix ? prefix : ""}
         </TextInput>
     );
