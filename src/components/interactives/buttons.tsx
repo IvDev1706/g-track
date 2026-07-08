@@ -1,27 +1,32 @@
 import { Pressable, StyleProp, ViewStyle } from "react-native";
 import ThemedText from "../ui/texts";
-import { CLEAR, SECONDARY, SECONDARY2 } from "../../utils/themeColors";
+import { CLEAR, DANGER, DANGER2, DARK, PRIMARY, PRIMARY2, SECONDARY, SECONDARY2, WARN, WARN2 } from "../../utils/themeColors";
 import React, { ReactElement } from "react";
 
 //propiedades de boton
 interface DefaultButtonProps {
     icon?: ReactElement
+    style?: "primary" | "secondary" | "danger" | "warn"
     text: string,
     onClick: () => void
 }
 
 //componente de botones
-export default function DefaultButton({ icon, text, onClick }:DefaultButtonProps){
+export default function DefaultButton({ icon, style, text, onClick }:DefaultButtonProps){
+    //obtener el tema
+    const theme = get_theme(style ? style : "secondary");
+
+    //componente de boton
     return (
         <Pressable style={({ pressed }) => [
             styles,
             {
-                backgroundColor: pressed ? SECONDARY2 : SECONDARY,
-                borderColor: pressed ? SECONDARY2 : SECONDARY
+                backgroundColor: pressed ? theme[1] :theme[0],
+                borderColor: pressed ? theme[1] :theme[0]
             }
         ]} onPress={ e => onClick()}>
             {icon}
-            {text != "" && <ThemedText text={text} type="button" color={CLEAR} />}
+            {text != "" && <ThemedText text={text} type="button" color={style && style == "warn" ? DARK : CLEAR} />}
         </Pressable>
     );
 }
@@ -36,3 +41,17 @@ const styles:StyleProp<ViewStyle> = {
     borderRadius: 5,
     gap: 5
 };
+
+//obtener el color
+const get_theme = (style:string):Array<string> => {
+    switch(style){
+        case "secondary":
+            return [SECONDARY,SECONDARY2];
+        case "danger":
+            return [DANGER,DANGER2];
+        case "warn":
+            return [WARN,WARN2];
+        default:
+            return [PRIMARY,PRIMARY2];
+    }
+}

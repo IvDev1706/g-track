@@ -81,6 +81,7 @@ export default function GameInfoCard({ game, handle_update, handle_delete }:Game
                         />
                         <DefaultButton 
                             icon={<AntDesign name="delete" color={CLEAR} size={16}/>}
+                            style="danger"
                             text="eliminar" onClick={() => handle_delete(localGame.id as number)}
                         />
                     </RowView>

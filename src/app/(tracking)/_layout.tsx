@@ -17,7 +17,7 @@ export default function TrackLayout(){
             tabBarInactiveTintColor: PRIMARY
         }}>
             <Tabs.Screen
-                name="index"
+                name="tracking"
                 options={{
                     title: "seguimiento",
                     tabBarLabel: "seguimiento",

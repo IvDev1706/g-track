@@ -4,8 +4,6 @@ import ScreenView from "../../components/ui/screen";
 import MyScrollView from "../../components/ui/scrollables";
 import ThemedText from "../../components/ui/texts";
 import { useGameContext } from "../../hooks/context";
-import { router } from "expo-router";
-import DefaultButton from "../../components/interactives/buttons";
 
 //pantalla principal
 export default function History(){
@@ -30,10 +28,6 @@ export default function History(){
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
                 }
             </MyScrollView>
-            <DefaultButton
-                text="ver base de juegos"
-                onClick={() => router.navigate("/games")}
-            />
         </ScreenView>
     );
 }

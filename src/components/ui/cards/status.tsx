@@ -43,8 +43,8 @@ export default function GameStatusCard({ game, handle_update }:GameCardProps){
                         <ThemedText text={"fecha: "+game.end_date} type="normal"/>:
                         game.status == 1 ?
                             <RowView distribution={[0.5,0.5]}>
-                                <DefaultButton text="completar" onClick={() => handle_update(localGame.id as number, localGame.status + 1)}/>
-                                <DefaultButton text="descartar" onClick={() => handle_update(localGame.id as number, localGame.status - 1)}/>
+                                <DefaultButton text="completar" style="warn" onClick={() => handle_update(localGame.id as number, localGame.status + 1)}/>
+                                <DefaultButton text="descartar" style="danger" onClick={() => handle_update(localGame.id as number, localGame.status - 1)}/>
                             </RowView>:
                         <DefaultButton text="comenzar" onClick={() => handle_update(localGame.id as number, localGame.status + 1)}/>
                     }

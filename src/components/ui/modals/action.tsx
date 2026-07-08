@@ -11,10 +11,11 @@ interface ModalProps {
     setOpen: (visible:boolean) => void
     action: string
     onAction: () => void
+    onClose: () => void
 }
 
 //modal para capturar texto
-export default function ActionModal({ isOpen, setOpen, children, action, onAction }:ModalProps){    
+export default function ActionModal({ isOpen, setOpen, children, action, onAction, onClose }:ModalProps){    
     //obtener estilos
     const styles = makeStyles();
     
@@ -26,6 +27,7 @@ export default function ActionModal({ isOpen, setOpen, children, action, onActio
             visible={isOpen}
             onRequestClose={() => {
                 setOpen(false);
+                onClose();
             }}
             backdropColor={DARK+"99"}
         >
@@ -35,7 +37,7 @@ export default function ActionModal({ isOpen, setOpen, children, action, onActio
                         {children}
                         <RowView distribution={[0.5,0.5]}>
                             <DefaultButton text={action} onClick={onAction}/>
-                            <DefaultButton text="cerrar" onClick={() => setOpen(false)}/>
+                            <DefaultButton text="cerrar" onClick={() => { setOpen(false); onClose() }}/>
                         </RowView>
                     </View>
                 </View>

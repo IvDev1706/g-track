@@ -72,7 +72,17 @@ export default function Tracking(){
                 isOpen={openMessage}
                 setOpen={setOpenMessage}
             />
-            <ActionModal isOpen={openAction} setOpen={setOpenAction} action="registrar" onAction={() => handle_add(game)}>
+            <ActionModal
+                isOpen={openAction}
+                setOpen={setOpenAction}
+                action="registrar"
+                onAction={() => handle_add(game)}
+                onClose={() => setGame({
+                    name: "",
+                    start_date: get_formated_date(),
+                    status: 0
+                })}
+            >
                 <ColumnView>
                     <ThemedText text="Registrar nuevo juego" type="title 2"/>
                     <ThemedText text="Nombre del juego:" type="normal"/>

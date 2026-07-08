@@ -57,10 +57,9 @@ export async function scheduleNotification(game_name:string, date:string):Promis
     const id = await Notifications.scheduleNotificationAsync({
         content: {
             title: `Comienza ${game_name} mañana!`,
-            body: `
-                No olvides actualizar el estado de ${game_name} y 
-                comiences a jugar.
-            `
+            body:
+                "No olvides actualizar el estado de ${game_name} y "+
+                "comiences a jugar."
         },
         trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,

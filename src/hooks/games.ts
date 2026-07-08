@@ -85,6 +85,9 @@ export default function useGames(){
     };
 
     const delete_game = async (id:number) => {
+        //obtener notificacion id
+        const notif_id = await notification_repository.get_notification_id(id);
+        
         //mandar a la db
         const res = await game_repository.delete_game(id);
 
@@ -94,7 +97,6 @@ export default function useGames(){
         }
 
         //obtener notificacion
-        const notif_id = await notification_repository.get_notification_id(id);
         await NotificationService.cancelScheduledNotificacion(notif_id);
 
         //añadir al estado

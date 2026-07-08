@@ -55,8 +55,10 @@ export default function RootLayout(){
                 headerStyle: { backgroundColor: PRIMARY },
                 headerTintColor: CLEAR,
             }}>
+                <Stack.Screen name="index" options={{ title: "principal" }} />
                 <Stack.Screen name="(tracking)" options={{ title: "seguimiento" }} />
                 <Stack.Screen name="games" options={{ title: "base de juegos" }} />
+                <Stack.Screen name="settings" options={{ title: "configuracion" }} />
                 <Stack.Screen name="permission" options={{ title: "permiso de notificaciones" }} />
             </Stack>
         </GamesProvider>
