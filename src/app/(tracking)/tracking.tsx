@@ -6,7 +6,7 @@ import ColumnView from "../../components/layouts/column";
 import FloatButton from "../../components/interactives/floatbutons";
 import ActionModal from "../../components/ui/modals/action";
 import { useState } from "react";
-import { useGameContext } from "../../hooks/context";
+import { useGameContext } from "../../hooks/contexts/games";
 import ThemedTextInput from "../../components/interactives/inputs";
 import { AntDesign } from "@expo/vector-icons";
 import { Game } from "../../interfaces/models";

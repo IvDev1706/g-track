@@ -1,7 +1,7 @@
-import useGames from "./games";
-import { GameContext } from "./context";
+import useGames from "../custom/games";
+import { GameContext } from "../contexts/games";
 import { ReactNode, useEffect } from "react";
-import { init_db } from "../database/dbconfig";
+import { init_db } from "../../database/dbconfig";
 
 //propiedades del provider
 type GamesProviderProps = {

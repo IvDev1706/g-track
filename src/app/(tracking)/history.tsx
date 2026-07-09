@@ -3,7 +3,7 @@ import GameStatusCard from "../../components/ui/cards/status";
 import ScreenView from "../../components/ui/screen";
 import MyScrollView from "../../components/ui/scrollables";
 import ThemedText from "../../components/ui/texts";
-import { useGameContext } from "../../hooks/context";
+import { useGameContext } from "../../hooks/contexts/games";
 
 //pantalla principal
 export default function History(){

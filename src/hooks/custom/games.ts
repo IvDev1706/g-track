@@ -1,9 +1,9 @@
 import { useState } from "react";
-import * as game_repository from "../database/games";
-import * as notification_repository from "../database/notifications";
-import { Game } from "../interfaces/models";
-import { get_formated_date } from "../utils/constats";
-import * as NotificationService from "../services/notification";
+import * as game_repository from "../../database/games";
+import * as notification_repository from "../../database/notifications";
+import { Game } from "../../interfaces/models";
+import { get_formated_date } from "../../utils/constats";
+import * as NotificationService from "../../services/notification";
 
 //hook de juegos
 export default function useGames(){

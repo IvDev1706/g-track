@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { Game } from "../interfaces/models";
+import { Game } from "../../interfaces/models";
 
 //propuedades del contexto
 interface GamesContextType {

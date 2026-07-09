@@ -1,6 +1,6 @@
 import { router, Stack } from "expo-router";
 import { PRIMARY, CLEAR } from "../utils/themeColors";
-import GamesProvider from "../hooks/provider";
+import GamesProvider from "../hooks/providers/games";
 import { useEffect, useState } from "react";
 import * as NotificationService from "../services/notification";
 
