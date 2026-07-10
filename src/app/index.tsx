@@ -5,11 +5,30 @@ import CardView from "../components/ui/cards/card";
 import ScreenView from "../components/ui/screen";
 import ThemedText from "../components/ui/texts";
 import { View, Image } from "react-native";
+import { useEffect } from "react";
+import { useSettingsContext } from "../hooks/contexts/settings";
 
 //pantala principal
 export default function Index(){
     //icono de la app
     const gtrack_logo = require('../../assets/g_track_logo.png');
+
+    //contextos
+    const settingsctx = useSettingsContext();
+
+    //efecto para configuracion
+    useEffect(() => {
+        //validar existencia
+        if(!settingsctx.settings){
+            return;
+        }
+
+        //validar configuracion
+        if(settingsctx.settings.quick_start){
+            //redirigir
+            router.navigate("/tracking");
+        }
+    },[settingsctx.settings]);
 
     //pantalla de bienvenida
     return (

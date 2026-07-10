@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as game_repository from "../../database/games";
 import * as notification_repository from "../../database/notifications";
 import { Game } from "../../interfaces/models";
 import { get_formated_date } from "../../utils/constats";
 import * as NotificationService from "../../services/notification";
+import { useSettingsContext } from "../contexts/settings";
 
 //hook de juegos
 export default function useGames(){
-    //estado de juegos
+    //estados
     const [games,setGames] = useState<Game[]>([]);
+    const [notfihour,setNotifHour] = useState(0);
+
+    //contexto de settings
+    const settingsctx = useSettingsContext();
+
+    //efecto para fijar hora de notificacion
+    useEffect(() => {
+        //validar que existen
+        if(!settingsctx.settings){
+            return;
+        }
+
+        //cargar hora
+        setNotifHour(settingsctx.settings.notification_hour);
+    },[settingsctx.settings]);
 
     //funciones del hook
     const get_games_db = (status?:number) => {
@@ -29,7 +45,7 @@ export default function useGames(){
         }
 
         //fijar notificacion
-        const not_id = await NotificationService.scheduleNotification(game.name,game.start_date);
+        const not_id = await NotificationService.scheduleNotification(game.name,game.start_date,notfihour);
         notification_repository.register_notification(id,not_id);
 
         //añadir al estado
@@ -73,7 +89,7 @@ export default function useGames(){
             //cancelar notificacion
             await NotificationService.cancelScheduledNotificacion(notif_id);
             //reagendar notificacion
-            const not_id = await NotificationService.scheduleNotification(game.name,game.start_date);
+            const not_id = await NotificationService.scheduleNotification(game.name,game.start_date,notfihour);
             await notification_repository.update_notification(game.id as number,not_id);
         }
 

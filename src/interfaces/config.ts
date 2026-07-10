@@ -6,7 +6,7 @@ export interface TextConfig {
 }
 
 //configuraciones de la app
-export interface AppConfig {
+export interface AppSettings {
     slots: number,
     notification_hour: number,
     quick_start: boolean

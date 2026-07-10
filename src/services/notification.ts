@@ -48,17 +48,17 @@ export async function setupAndroidChannel() {
 }
 
 //registrar notificacion
-export async function scheduleNotification(game_name:string, date:string):Promise<string>{
+export async function scheduleNotification(game_name:string, date:string, hour:number):Promise<string>{
     //fecha del evento
     const notification_date = parse_date(date,1);
-    notification_date.setHours(20,0,0,0);
+    notification_date.setHours(hour,0,0,0);
 
     //agendar notificacion
     const id = await Notifications.scheduleNotificationAsync({
         content: {
             title: `Comienza ${game_name} mañana!`,
             body:
-                "No olvides actualizar el estado de ${game_name} y "+
+                `No olvides actualizar el estado de ${game_name} y `+
                 "comiences a jugar."
         },
         trigger: {
