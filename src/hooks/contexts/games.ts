@@ -8,6 +8,7 @@ interface GamesContextType {
     add_new_game: (game:Game) => Promise<boolean> 
     update_game_status: (id:number,status:number) => Promise<boolean>
     update_game_data: (game:Game) => Promise<boolean> 
+    trim_excess_tracking: (maxCount: number) => Promise<void>
     delete_game: (id:number) => Promise<boolean> 
 }
 

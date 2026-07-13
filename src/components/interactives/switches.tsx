@@ -1,5 +1,6 @@
 import { Switch } from "react-native";
 import { CLEAR2, PRIMARY, CLEAR } from "../../utils/themeColors";
+import { View } from "react-native";
 
 //propiedades del switch
 interface DefaultSwitchProps {

@@ -24,6 +24,10 @@ export default function GamesDatabase(){
             return;
         }
 
+        //lmpieza de campos
+        game.name = game.name.trim();
+        game.start_date = game.start_date.trim();
+
         //aplicar actualizacion
         gamesctx.update_game_data(game);
     }

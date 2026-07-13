@@ -5,7 +5,7 @@ import CardView from "../components/ui/cards/card";
 import ScreenView from "../components/ui/screen";
 import ThemedText from "../components/ui/texts";
 import { View, Image } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSettingsContext } from "../hooks/contexts/settings";
 
 //pantala principal
@@ -15,17 +15,17 @@ export default function Index(){
 
     //contextos
     const settingsctx = useSettingsContext();
+    const initialized = useRef(false);
 
-    //efecto para configuracion
+    //efecto para configuracion (solo al iniciar)
     useEffect(() => {
-        //validar existencia
-        if(!settingsctx.settings){
+        if(!settingsctx.settings || initialized.current){
             return;
         }
 
-        //validar configuracion
+        initialized.current = true;
+
         if(settingsctx.settings.quick_start){
-            //redirigir
             router.navigate("/tracking");
         }
     },[settingsctx.settings]);

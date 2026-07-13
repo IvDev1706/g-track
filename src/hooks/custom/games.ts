@@ -57,6 +57,15 @@ export default function useGames(){
     };
 
     const update_game_status = async (id:number, status:number) => {
+        //validar slots al cambiar a "en curso"
+        if(status === 1 && settingsctx.settings){
+            const limit = settingsctx.settings.slots;
+            const trackingCount = games.filter(g => g.status === 1).length;
+            if(trackingCount >= limit){
+                return false;
+            }
+        }
+
         //mandar a la db
         const res = await game_repository.update_game_status(id,status);
 
@@ -65,7 +74,7 @@ export default function useGames(){
             return res;
         }
 
-        //añadir al estado
+        //actualizar estado local
         setGames(games.map(ogame => ogame.id != id ? ogame : {...ogame, status, end_date: get_formated_date()}));
 
         //exito al crear
@@ -100,6 +109,31 @@ export default function useGames(){
         return res;
     };
 
+    const trim_excess_tracking = async (slots: number) => {
+        //obtener los juegos en seguimiento
+        const tracking = games.filter(g => g.status == 1);
+
+        //si aun hay slots disponibles no hacemos nada
+        if(tracking.length <= slots) return;
+
+        //ordena los juegos por fecha y obtiene el excedente
+        const excess = tracking
+            .sort((a, b) => a.start_date.localeCompare(b.start_date))
+            .slice(0, tracking.length - slots);
+
+        //los regresa al estado previo (programado)
+        for(const game of excess){
+            await game_repository.update_game_status(game.id as number, 0);
+        }
+
+        //actualiza el estado
+        setGames(games.map(g =>
+            excess.some(e => e.id === g.id)
+                ? { ...g, status: 0, end_date: undefined }
+                : g
+        ));
+    };
+
     const delete_game = async (id:number) => {
         //obtener notificacion id
         const notif_id = await notification_repository.get_notification_id(id);
@@ -123,5 +157,5 @@ export default function useGames(){
     };
 
     //elementos del hook
-    return { games, get_games_db, add_new_game, update_game_status, update_game_data, delete_game }
+    return { games, get_games_db, add_new_game, update_game_status, update_game_data, trim_excess_tracking, delete_game }
 }

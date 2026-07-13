@@ -6,9 +6,11 @@ import CardView from "../components/ui/cards/card";
 import ScreenView from "../components/ui/screen";
 import ThemedText from "../components/ui/texts";
 import { useSettingsContext } from "../hooks/contexts/settings";
+import { useGameContext } from "../hooks/contexts/games";
 import { AppSettings } from "../interfaces/config";
 import MessageModal from "../components/ui/modals/message";
 import DefaultSwitch from "../components/interactives/switches";
+import RowView from "../components/layouts/row";
 
 //pantala principal
 export default function Settings(){
@@ -22,6 +24,7 @@ export default function Settings(){
 
     //contexto de settings
     const settingsctx = useSettingsContext();
+    const gamesctx = useGameContext();
 
     //efecto para copiar settings
     useEffect(() => {
@@ -52,8 +55,8 @@ export default function Settings(){
                         type="normal"
                     />
                     <ThemedTextInput 
-                        prefix={cpsettings.slots.toString()}
-                        onChange={v => settingsctx.set_settings({...cpsettings, slots: parseInt(v)})}
+                        prefix={cpsettings.slots?cpsettings.slots.toString():""}
+                        onChange={v => settingsctx.set_settings({...cpsettings, slots: (v!=""?parseInt(v):0)})}
                     />
                     <ThemedText text="Hora de notificacion" type="title 2"/>
                     <ThemedText 
@@ -61,21 +64,27 @@ export default function Settings(){
                         type="normal"
                     />
                     <ThemedTextInput 
-                        prefix={cpsettings.notification_hour.toString()}
-                        onChange={v => settingsctx.set_settings({...cpsettings, notification_hour: parseInt(v)})}
+                        prefix={cpsettings.notification_hour?cpsettings.notification_hour.toString():""}
+                        onChange={v => settingsctx.set_settings({...cpsettings, notification_hour: (v!=""?parseInt(v):0)})}
                     />
                     <ThemedText text="Acceso rapido" type="title 2"/>
-                    <ThemedText 
-                        text="¿se debe ir a seguimiento al iniciar la app?"
-                        type="normal"
-                    />
-                    <DefaultSwitch 
-                        state={cpsettings.quick_start}
-                        onChange={(s) => settingsctx.set_settings({...cpsettings, quick_start: s})}
-                    />
+                    <RowView>
+                        <ThemedText 
+                            text="¿se debe ir a seguimiento al iniciar la app?"
+                            type="normal"
+                        />
+                        <DefaultSwitch 
+                            state={cpsettings.quick_start}
+                            onChange={(s) => settingsctx.set_settings({...cpsettings, quick_start: s})}
+                        />
+                    </RowView>
                     <DefaultButton
                         text="guardar"
-                        onClick={() => { settingsctx.write_settings(); setOpen(true)}}
+                        onClick={() => { 
+                            settingsctx.write_settings(); 
+                            gamesctx.trim_excess_tracking(cpsettings.slots);
+                            setOpen(true)
+                        }}
                     />
                 </ColumnView>
             </CardView>

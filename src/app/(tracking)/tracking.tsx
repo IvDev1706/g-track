@@ -13,6 +13,7 @@ import { Game } from "../../interfaces/models";
 import GameStatusCard from "../../components/ui/cards/status";
 import { get_formated_date } from "../../utils/constats";
 import MessageModal from "../../components/ui/modals/message";
+import { useSettingsContext } from "../../hooks/contexts/settings";
 
 //pantalla principal
 export default function Tracking(){
@@ -20,6 +21,7 @@ export default function Tracking(){
     const [openAction,setOpenAction] = useState(false);
     const [openMessage,setOpenMessage] = useState(false);
     const [openWarning,setOpenWarning] = useState(false);
+    const [openSlotsWarning,setOpenSlotsWarning] = useState(false);
     const [success,setSuccess] = useState(false);
     const [game,setGame] = useState<Game>({
         name: "",
@@ -27,8 +29,17 @@ export default function Tracking(){
         status: 0
     });
 
-    //contexto de juegos
+    //contextos
     const gamesctx = useGameContext();
+    const settingsctx = useSettingsContext();
+
+    //wrapper para validar slots al actualizar estado
+    const handle_status_update = async (id: number, status: number) => {
+        const res = await gamesctx.update_game_status(id, status);
+        if(!res){
+            setOpenSlotsWarning(true);
+        }
+    };
 
     //manejo de creacion
     const handle_add = (game:Game) => {
@@ -85,6 +96,12 @@ export default function Tracking(){
                 isOpen={openMessage}
                 setOpen={setOpenMessage}
             />
+            <MessageModal
+                title="Slots llenos"
+                message="has alcanzado el limite de juegos en seguimiento, cambia la configuracion para aumentar el numero de slots."
+                isOpen={openSlotsWarning}
+                setOpen={setOpenSlotsWarning}
+            />
             <ActionModal
                 isOpen={openAction}
                 setOpen={setOpenAction}
@@ -104,12 +121,12 @@ export default function Tracking(){
                     <ThemedTextInput prefix={game.start_date} onChange={(v) => setGame({...game, start_date: v})}/>
                 </ColumnView>
             </ActionModal>
-            <ThemedText text="Juegos en seguimiento" type="title 2"/>
+            <ThemedText text={"Juegos en seguimiento (slots: "+settingsctx.settings?.slots+")"} type="title 2"/>
             <MyScrollView>
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 1).map(game => 
-                            <GameStatusCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
+                            <GameStatusCard key={game.id} game={game} handle_update={handle_status_update}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
@@ -120,7 +137,7 @@ export default function Tracking(){
                 {gamesctx.games.length != 0 ? 
                     <ColumnView>
                         {gamesctx.games.filter(game => game.status == 0).map(game => 
-                            <GameStatusCard key={game.id} game={game} handle_update={gamesctx.update_game_status}/>
+                            <GameStatusCard key={game.id} game={game} handle_update={handle_status_update}/>
                         )}
                     </ColumnView> :
                     <ThemedText text="no hay juegos por mostrar" type="normal"/>
